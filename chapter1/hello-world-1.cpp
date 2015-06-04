@@ -7,7 +7,7 @@ SDL_Renderer *renderer = nullptr;
 int main(int argc, char **args)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
     }
 
@@ -15,7 +15,7 @@ int main(int argc, char **args)
     window = SDL_CreateWindow(windowTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
 
     if (window == nullptr) {
-        std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         return 1;
     }
 
