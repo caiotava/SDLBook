@@ -1,8 +1,14 @@
 #include<iostream>
 #include "Game.h"
 
-bool Game::init(const char *title, int xPosition, int yPosition, int height, int width, int flags)
+bool Game::init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen)
 {
+    int flags = SDL_WINDOW_SHOWN;
+
+    if (fullScreen) {
+        flags = SDL_WINDOW_FULLSCREEN;
+    }
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return false;
