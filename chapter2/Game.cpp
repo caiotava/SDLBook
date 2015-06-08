@@ -29,13 +29,14 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	SDL_Surface *surface = SDL_LoadBMP("assets/rider.bmp");
+	SDL_Surface *surface = SDL_LoadBMP("assets/animate.bmp");
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	SDL_FreeSurface(surface);
 
-	SDL_QueryTexture(texture, NULL, NULL, &sourceRectangle.w, &sourceRectangle.h);
+	sourceRectangle.w = 128;
+	sourceRectangle.h = 82;
 
 	destinationRectangle.x = 0;
 	destinationRectangle.y = 0;
