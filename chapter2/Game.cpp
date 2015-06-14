@@ -51,7 +51,7 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
 
-	SDL_RenderCopy(renderer, texture, &sourceRectangle, &destinationRectangle);
+	SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 10, 0, SDL_FLIP_HORIZONTAL);
 
     SDL_RenderPresent(renderer);
 }
@@ -71,6 +71,11 @@ void Game::handleEvents()
         default:
             break;
     }
+}
+
+void Game::update()
+{
+	sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::clean()

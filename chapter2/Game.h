@@ -12,7 +12,7 @@ class Game
 		bool init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen);
 
 		void render();
-		void update() {}
+		void update();
 		void handleEvents();
 		void clean();
 
