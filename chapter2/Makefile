@@ -1,8 +1,8 @@
 CXX = g++
-SDL = -framework SDL2
+SDL = -lSDL2
 CXXFLAGS = -Wall -c -std=c++11
 INCLUDE = -Iinclude/
-LDFLAGS = $(SDL)
+LDFLAGS = $(SDL) -lSDL2_image
 BIN_DIR = bin/
 
 all: load-texture

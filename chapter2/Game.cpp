@@ -27,9 +27,9 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
         return false;
     }
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-	SDL_Surface *surface = SDL_LoadBMP("assets/animate.bmp");
+	SDL_Surface *surface = IMG_Load("assets/animate.png");
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -51,7 +51,7 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
 
-	SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 10, 0, SDL_FLIP_HORIZONTAL);
+	SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 0, 0, SDL_FLIP_HORIZONTAL);
 
     SDL_RenderPresent(renderer);
 }
