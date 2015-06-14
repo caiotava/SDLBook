@@ -29,7 +29,7 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-	SDL_Surface *surface = IMG_Load("assets/animate.png");
+	SDL_Surface *surface = IMG_Load("assets/animate-alpha.png");
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
