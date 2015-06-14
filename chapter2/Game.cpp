@@ -29,19 +29,7 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-	SDL_Surface *surface = IMG_Load("assets/animate-alpha.png");
-
-	texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-	SDL_FreeSurface(surface);
-
-	sourceRectangle.w = 128;
-	sourceRectangle.h = 82;
-
-	destinationRectangle.x = 0;
-	destinationRectangle.y = 0;
-	destinationRectangle.w = sourceRectangle.w;
-	destinationRectangle.h = sourceRectangle.h;
+    textureManager.load("assets/animate-alpha.png", "animate", renderer);
 
     running = true;
     return nullptr;
@@ -51,7 +39,8 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
 
-	SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 0, 0, SDL_FLIP_HORIZONTAL);
+    textureManager.draw("animate", 0, 0, 128, 82, renderer);
+    textureManager.drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
 
     SDL_RenderPresent(renderer);
 }
@@ -75,7 +64,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    currentFrame = int((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::clean()
