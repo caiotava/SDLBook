@@ -1,5 +1,6 @@
 #include<iostream>
 #include "Game.h"
+#include"TextureManager.h"
 
 bool Game::init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen)
 {
@@ -29,7 +30,7 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-    textureManager.load("assets/animate-alpha.png", "animate", renderer);
+    TheTextureManager::getInstance()->load("assets/animate-alpha.png", "animate", renderer);
 
     running = true;
     return nullptr;
@@ -39,8 +40,8 @@ void Game::render()
 {
     SDL_RenderClear(renderer);
 
-    textureManager.draw("animate", 0, 0, 128, 82, renderer);
-    textureManager.drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
+    TheTextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
+    TheTextureManager::getInstance()->drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
 
     SDL_RenderPresent(renderer);
 }

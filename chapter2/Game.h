@@ -2,7 +2,6 @@
 #define __GAME__
 
 #include<SDL2/SDL.h>
-#include"TextureManager.h"
 
 class Game
 {
@@ -25,7 +24,6 @@ class Game
         SDL_Renderer *renderer;
 
         int currentFrame;
-        TextureManager textureManager;
 };
 
 #endif
