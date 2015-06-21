@@ -8,7 +8,7 @@ BIN_DIR = bin/
 all: load-texture
 
 load-texture: load-texture.o Game.o TextureManager.o
-	$(CXX) $< -o $(BIN_DIR)$@ $(LDFLAGS)
+	$(CXX) $^ -o $(BIN_DIR)$@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) $^ -o $@

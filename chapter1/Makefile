@@ -8,10 +8,10 @@ BIN_DIR = bin/
 all: hello-world-1 hello-world-2
 
 hello-world-1: hello-world-1.o
-	$(CXX) $< -o $(BIN_DIR)$@ $(LDFLAGS)
+	$(CXX) $^ -o $(BIN_DIR)$@ $(LDFLAGS)
 
 hello-world-2: hello-world-2.o Game.o
-	$(CXX) $< -o $(BIN_DIR)$@ $(LDFLAGS)
+	$(CXX) $^ -o $(BIN_DIR)$@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) $^ -o $@
