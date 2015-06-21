@@ -8,8 +8,14 @@
 class Game
 {
     public:
-        Game() {}
-        ~Game() {}
+        static Game *getInstance()
+        {
+            if (!instance) {
+                instance = new Game();
+            }
+
+            return instance;
+        }
 
         bool init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen);
 
@@ -20,7 +26,11 @@ class Game
 
         bool isRunning() { return running; }
 
+        SDL_Renderer *getRenderer() const { return renderer; }
+
     private:
+        static Game *instance;
+
         bool running;
         SDL_Window *window;
         SDL_Renderer *renderer;
@@ -28,6 +38,11 @@ class Game
         int currentFrame;
 
         std::vector<GameObject*> gameObjects;
+
+        Game() {}
+        ~Game() {}
 };
+
+typedef Game TheGame;
 
 #endif

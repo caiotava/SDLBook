@@ -1,8 +1,11 @@
 #include<iostream>
 #include "Game.h"
 #include"TextureManager.h"
+#include"LoaderParams.h"
 #include"Player.h"
 #include"Enemy.h"
+
+Game *Game::instance = 0;
 
 bool Game::init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen)
 {
@@ -34,15 +37,9 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     TheTextureManager::getInstance()->load("assets/animate-alpha.png", "animate", renderer);
 
-    GameObject *gameObject = new GameObject();
-    GameObject *player = new Player();
-    GameObject *enemy = new Enemy();
+    Player *player = new Player(new LoaderParams(100, 100, 128, 82, "animate"));
+    Enemy *enemy = new Enemy(new LoaderParams(300, 300, 128, 82, "animate"));
 
-    gameObject->load(100, 100, 128, 82, "animate");
-    player->load(300, 300, 128, 82, "animate");
-    enemy->load(0, 0, 128, 82, "animate");
-
-    gameObjects.push_back(gameObject);
     gameObjects.push_back(player);
     gameObjects.push_back(enemy);
 
@@ -55,11 +52,11 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     for (std::vector<GameObject*>::size_type x = 0; x != gameObjects.size(); x++) {
-        gameObjects[x]->draw(renderer);
+        gameObjects[x]->draw();
     }
 
-    TheTextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
-    TheTextureManager::getInstance()->drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
+    //TheTextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
+    //TheTextureManager::getInstance()->drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
 
     SDL_RenderPresent(renderer);
 }
