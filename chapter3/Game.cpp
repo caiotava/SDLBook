@@ -1,6 +1,8 @@
 #include<iostream>
 #include "Game.h"
 #include"TextureManager.h"
+#include"Player.h"
+#include"Enemy.h"
 
 bool Game::init(const char *title, int xPosition, int yPosition, int height, int width, bool fullScreen)
 {
@@ -32,6 +34,18 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     TheTextureManager::getInstance()->load("assets/animate-alpha.png", "animate", renderer);
 
+    GameObject *gameObject = new GameObject();
+    GameObject *player = new Player();
+    GameObject *enemy = new Enemy();
+
+    gameObject->load(100, 100, 128, 82, "animate");
+    player->load(300, 300, 128, 82, "animate");
+    enemy->load(0, 0, 128, 82, "animate");
+
+    gameObjects.push_back(gameObject);
+    gameObjects.push_back(player);
+    gameObjects.push_back(enemy);
+
     running = true;
     return nullptr;
 }
@@ -39,6 +53,10 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 void Game::render()
 {
     SDL_RenderClear(renderer);
+
+    for (std::vector<GameObject*>::size_type x = 0; x != gameObjects.size(); x++) {
+        gameObjects[x]->draw(renderer);
+    }
 
     TheTextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
     TheTextureManager::getInstance()->drawFrame("animate", 100, 100, 128, 82, 1, currentFrame, renderer);
@@ -65,7 +83,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    for (std::vector<GameObject*>::size_type x = 0; x != gameObjects.size(); x++) {
+        gameObjects[x]->update();
+    }
+
     currentFrame = int((SDL_GetTicks() / 100) % 6);
+
+    SDL_Delay(10);
 }
 
 void Game::clean()

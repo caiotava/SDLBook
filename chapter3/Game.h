@@ -1,7 +1,9 @@
 #ifndef __GAME__
 #define __GAME__
 
+#include<vector>
 #include<SDL2/SDL.h>
+#include"GameObject.h"
 
 class Game
 {
@@ -24,6 +26,8 @@ class Game
         SDL_Renderer *renderer;
 
         int currentFrame;
+
+        std::vector<GameObject*> gameObjects;
 };
 
 #endif
