@@ -7,7 +7,7 @@ BIN_DIR = bin/
 
 all: chapter3
 
-chapter3: main.o Game.o TextureManager.o
+chapter3: main.o Game.o GameObject.o Player.o Enemy.o TextureManager.o
 	$(CXX) $^ -o $(BIN_DIR)$@ $(LDFLAGS)
 
 %.o: %.cpp
