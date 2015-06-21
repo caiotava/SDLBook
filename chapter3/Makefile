@@ -1,14 +1,14 @@
 CXX = g++
-SDL = -lSDL2
-CXXFLAGS = -Wall -c -std=c++11
-INCLUDE = -Iinclude/
-LDFLAGS = $(SDL) -lSDL2_image
+CXXSDL = $(shell sdl2-config --cflags)
+LDSDL = $(shell sdl2-config --libs)
+CXXFLAGS = -Wall -c -std=c++11 $(CXXSDL)
+LDFLAGS = $(LDSDL) -lSDL2_image
 BIN_DIR = bin/
 
-all: load-texture
+all: chapter3
 
-load-texture: load-texture.o Game.o TextureManager.o
-	$(CXX) $(LDFLAGS) $^ -o $(BIN_DIR)$@
+chapter3: main.o Game.o TextureManager.o
+	$(CXX) $^ -o $(BIN_DIR)$@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) $^ -o $@
