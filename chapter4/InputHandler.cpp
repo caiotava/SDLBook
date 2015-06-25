@@ -10,7 +10,7 @@ void InputHandler::initialiseJoysticks()
         SDL_InitSubSystem(SDL_INIT_JOYSTICK);
     }
 
-    if (SDL_NumJoysticks() > 0) {
+    if (SDL_NumJoysticks() <= 0) {
         joysticksInitialised = false;
         return;
     }
