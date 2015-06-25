@@ -4,6 +4,7 @@
 #include<iostream>
 #include"GameObject.h"
 #include"LoaderParams.h"
+#include"Vector2D.h"
 
 class SDLGameObject: public GameObject
 {
@@ -11,13 +12,10 @@ class SDLGameObject: public GameObject
         SDLGameObject(const LoaderParams *pParams);
 
         virtual void draw();
-        virtual void update() {}
+        virtual void update();
         virtual void clean() {}
 
     protected:
-        int x;
-        int y;
-
         int width;
         int height;
 
@@ -25,6 +23,10 @@ class SDLGameObject: public GameObject
         int currentFrame;
 
         std::string textureId;
+
+        Vector2D position;
+        Vector2D velocity;
+        Vector2D acceleration;
 };
 
 #endif

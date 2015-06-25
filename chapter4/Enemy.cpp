@@ -12,7 +12,7 @@ void Enemy::draw()
 
 void Enemy::update()
 {
-    y += 1;
-    x += 1;
+    position.setY(position.getX() + 1);
+    position.setX(position.getY() + 1);
     currentFrame = int((SDL_GetTicks() / 100) % 6);
 }

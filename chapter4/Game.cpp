@@ -2,6 +2,7 @@
 #include "Game.h"
 #include"TextureManager.h"
 #include"LoaderParams.h"
+#include"InputHandler.h"
 #include"Player.h"
 #include"Enemy.h"
 
@@ -22,19 +23,20 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
 
     window = SDL_CreateWindow(title, xPosition, yPosition, height, width, flags);
 
-    if (window == nullptr) {
+    if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         return false;
     }
 
     renderer = SDL_CreateRenderer(window, -1, 0);
 
-    if (renderer == nullptr) {
+    if (!renderer) {
         return false;
     }
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
+    TheInputHandler::getInstance()->initialiseJoysticks();
     TheTextureManager::getInstance()->load("assets/animate-alpha.png", "animate", renderer);
 
     Player *player = new Player(new LoaderParams(100, 100, 128, 82, "animate"));
@@ -44,7 +46,7 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
     gameObjects.push_back(enemy);
 
     running = true;
-    return nullptr;
+    return NULL;
 }
 
 void Game::render()
@@ -63,19 +65,7 @@ void Game::render()
 
 void Game::handleEvents()
 {
-    SDL_Event event;
-
-    if (!SDL_PollEvent(&event)) {
-        return;
-    }
-
-    switch (event.type) {
-        case SDL_QUIT:
-            running = false;
-            break;
-        default:
-            break;
-    }
+    TheInputHandler::getInstance()->update();
 }
 
 void Game::update()
@@ -85,12 +75,14 @@ void Game::update()
     }
 
     currentFrame = int((SDL_GetTicks() / 100) % 6);
-
-    SDL_Delay(10);
 }
 
 void Game::clean()
 {
+    TheInputHandler::getInstance()->clean();
+
+    running = false;
+
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
