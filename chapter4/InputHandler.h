@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<SDL2/SDL.h>
+#include"Vector2D.h"
 
 class InputHandler
 {
@@ -24,6 +25,9 @@ class InputHandler
             return joysticksInitialised;
         }
 
+        int xValue(int joystickId, int stickId);
+        int yValue(int joystickId, int stickId);
+
     private:
         InputHandler() {}
         ~InputHandler() {}
@@ -31,6 +35,7 @@ class InputHandler
         static InputHandler *instance;
 
         std::vector<SDL_Joystick*> joysticks;
+        std::vector< std::pair<Vector2D*, Vector2D*> > joysticksValues;
         bool joysticksInitialised;
 };
 

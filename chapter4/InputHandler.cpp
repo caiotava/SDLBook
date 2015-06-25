@@ -24,6 +24,12 @@ void InputHandler::initialiseJoysticks()
         }
 
         joysticks.push_back(joystick);
+        joysticksValues.push_back(
+            std::make_pair(
+                new Vector2D(0, 0),
+                new Vector2D(0, 0)
+            )
+        );
     }
 
     SDL_JoystickEventState(SDL_ENABLE);
@@ -51,5 +57,16 @@ void InputHandler::update()
         if (event.type == SDL_QUIT) {
             TheGame::getInstance()->clean();
         }
+    }
+}
+
+int InputHandler::xValue(int joystickId, int stickId)
+{
+    if (joysticksValues.size() <= 0) {
+        return 0;
+    }
+
+    if (stickId == 1) {
+        return joysticksValues[joystickId].first->getY();
     }
 }
