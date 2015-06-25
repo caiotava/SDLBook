@@ -46,7 +46,7 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
     gameObjects.push_back(enemy);
 
     running = true;
-    return NULL;
+    return true;
 }
 
 void Game::render()
