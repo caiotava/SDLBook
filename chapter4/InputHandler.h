@@ -28,6 +28,8 @@ class InputHandler
         int xValue(int joystickId, int stickId);
         int yValue(int joystickId, int stickId);
 
+        bool getButtonState(int joystickId, int buttonNumber);
+
         const int joystickDeadZone = 10000;
 
     private:
@@ -38,6 +40,7 @@ class InputHandler
 
         std::vector<SDL_Joystick*> joysticks;
         std::vector< std::pair<Vector2D*, Vector2D*> > joysticksValues;
+        std::vector< std::vector<bool> > buttonStates;
         bool joysticksInitialised;
 };
 

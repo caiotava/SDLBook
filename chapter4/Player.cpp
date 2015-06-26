@@ -31,6 +31,10 @@ void Player::handleInput()
         return;
     }
 
+    if (inputHandler->getButtonState(0, 3)) {
+        velocity.setX(1);
+    }
+
     if (inputHandler->xValue(0, 1) > 0 || inputHandler->xValue(0, 1) < 0) {
         velocity.setX(1 * inputHandler->xValue(0, 1));
     }

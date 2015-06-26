@@ -30,6 +30,14 @@ void InputHandler::initialiseJoysticks()
                 new Vector2D(0, 0)
             )
         );
+
+        std::vector<bool> buttonValues;
+
+        for (int i = 0; i < SDL_JoystickNumButtons(joystick); i++) {
+            buttonValues.push_back(false);
+        }
+
+        buttonStates.push_back(buttonValues);
     }
 
     SDL_JoystickEventState(SDL_ENABLE);
@@ -56,6 +64,18 @@ void InputHandler::update()
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             TheGame::getInstance()->clean();
+        }
+
+        if (event.type == SDL_JOYBUTTONDOWN) {
+            int whichOne = event.jaxis.which;
+
+            buttonStates[whichOne][event.jbutton.button] = true;
+        }
+
+        if (event.type == SDL_JOYBUTTONUP) {
+            int whichOne = event.jaxis.which;
+
+            buttonStates[whichOne][event.jbutton.button] = false;
         }
 
         if (event.type == SDL_JOYAXISMOTION) {
@@ -138,4 +158,9 @@ int InputHandler::yValue(int joystickId, int stickId)
     }
 
     return 0;
+}
+
+bool InputHandler::getButtonState(int joystickId, int buttonNumber)
+{
+    return buttonStates[joystickId][buttonNumber];
 }
