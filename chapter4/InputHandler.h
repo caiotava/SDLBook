@@ -28,6 +28,8 @@ class InputHandler
         int xValue(int joystickId, int stickId);
         int yValue(int joystickId, int stickId);
 
+        const int joystickDeadZone = 10000;
+
     private:
         InputHandler() {}
         ~InputHandler() {}
