@@ -38,7 +38,9 @@ class InputHandler
         bool getButtonState(int joystickId, int buttonNumber);
         bool getMouseButtonState(int buttonNumber);
 
-        const int joystickDeadZone = 8000;
+        Vector2D* getMousePosition();
+
+        const int joystickDeadZone = 10000;
 
     private:
         InputHandler();
@@ -50,6 +52,7 @@ class InputHandler
         std::vector< std::pair<Vector2D*, Vector2D*> > joysticksValues;
         std::vector< std::vector<bool> > buttonStates;
         std::vector<bool> mouseButtonStates;
+        Vector2D *mousePosition;
         bool joysticksInitialised;
 };
 

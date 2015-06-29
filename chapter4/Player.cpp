@@ -27,6 +27,10 @@ void Player::handleInput()
 {
     InputHandler *inputHandler = TheInputHandler::getInstance();
 
+    Vector2D *mousePosition = inputHandler->getMousePosition();
+
+    velocity = (*mousePosition - position) / 100;
+
     if (inputHandler->getMouseButtonState(LEFT)) {
         velocity.setX(1);
     }

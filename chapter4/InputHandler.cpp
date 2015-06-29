@@ -6,6 +6,8 @@ InputHandler *InputHandler::instance = 0;
 
 InputHandler::InputHandler()
 {
+    mousePosition = new Vector2D(0, 0);
+
     for (int x = 0; x < 3; x++) {
         mouseButtonStates.push_back(false);
     }
@@ -71,6 +73,11 @@ void InputHandler::update()
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             TheGame::getInstance()->clean();
+        }
+
+        if (event.type == SDL_MOUSEMOTION) {
+            mousePosition->setX(event.motion.x);
+            mousePosition->setY(event.motion.y);
         }
 
         if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -203,4 +210,9 @@ bool InputHandler::getButtonState(int joystickId, int buttonNumber)
 bool InputHandler::getMouseButtonState(int buttonNumber)
 {
     return mouseButtonStates[buttonNumber];
+}
+
+Vector2D* InputHandler::getMousePosition()
+{
+    return mousePosition;
 }
