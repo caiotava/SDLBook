@@ -155,7 +155,7 @@ void InputHandler::update()
                 if (event.jaxis.value > joystickDeadZone) {
                     joysticksValues[whichOne].second->setY(1);
                 }
-                else if (event.jaxis.value > -joystickDeadZone) {
+                else if (event.jaxis.value < -joystickDeadZone) {
                     joysticksValues[whichOne].second->setY(-1);
                 }
             }
@@ -170,7 +170,7 @@ int InputHandler::xValue(int joystickId, int stickId)
     }
 
     if (stickId == 1) {
-        return joysticksValues[joystickId].first->getY();
+        return joysticksValues[joystickId].first->getX();
     }
     else if (stickId == 2) {
         return joysticksValues[joystickId].second->getX();
@@ -189,7 +189,7 @@ int InputHandler::yValue(int joystickId, int stickId)
         return joysticksValues[joystickId].first->getY();
     }
     else if (stickId == 2) {
-        return joysticksValues[joystickId].second->getX();
+        return joysticksValues[joystickId].second->getY();
     }
 
     return 0;
