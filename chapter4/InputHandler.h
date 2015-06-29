@@ -5,6 +5,13 @@
 #include<SDL2/SDL.h>
 #include"Vector2D.h"
 
+enum MouseButtons
+{
+    LEFT = 0,
+    MIDDLE = 1,
+    RIGHT = 2
+};
+
 class InputHandler
 {
     public:
@@ -29,11 +36,12 @@ class InputHandler
         int yValue(int joystickId, int stickId);
 
         bool getButtonState(int joystickId, int buttonNumber);
+        bool getMouseButtonState(int buttonNumber);
 
-        const int joystickDeadZone = 10000;
+        const int joystickDeadZone = 8000;
 
     private:
-        InputHandler() {}
+        InputHandler();
         ~InputHandler() {}
 
         static InputHandler *instance;
@@ -41,6 +49,7 @@ class InputHandler
         std::vector<SDL_Joystick*> joysticks;
         std::vector< std::pair<Vector2D*, Vector2D*> > joysticksValues;
         std::vector< std::vector<bool> > buttonStates;
+        std::vector<bool> mouseButtonStates;
         bool joysticksInitialised;
 };
 

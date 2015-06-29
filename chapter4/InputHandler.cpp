@@ -4,6 +4,13 @@
 
 InputHandler *InputHandler::instance = 0;
 
+InputHandler::InputHandler()
+{
+    for (int x = 0; x < 3; x++) {
+        mouseButtonStates.push_back(false);
+    }
+}
+
 void InputHandler::initialiseJoysticks()
 {
     if (SDL_WasInit(SDL_INIT_JOYSTICK) == 0) {
@@ -64,6 +71,34 @@ void InputHandler::update()
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             TheGame::getInstance()->clean();
+        }
+
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                mouseButtonStates[LEFT] = true;
+            }
+
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                mouseButtonStates[MIDDLE] = true;
+            }
+
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                mouseButtonStates[RIGHT] = true;
+            }
+        }
+
+        if (event.type == SDL_MOUSEBUTTONUP) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                mouseButtonStates[LEFT] = false;
+            }
+
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                mouseButtonStates[MIDDLE] = false;
+            }
+
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                mouseButtonStates[RIGHT] = false;
+            }
         }
 
         if (event.type == SDL_JOYBUTTONDOWN) {
@@ -163,4 +198,9 @@ int InputHandler::yValue(int joystickId, int stickId)
 bool InputHandler::getButtonState(int joystickId, int buttonNumber)
 {
     return buttonStates[joystickId][buttonNumber];
+}
+
+bool InputHandler::getMouseButtonState(int buttonNumber)
+{
+    return mouseButtonStates[buttonNumber];
 }

@@ -27,6 +27,10 @@ void Player::handleInput()
 {
     InputHandler *inputHandler = TheInputHandler::getInstance();
 
+    if (inputHandler->getMouseButtonState(LEFT)) {
+        velocity.setX(1);
+    }
+
     if (!inputHandler->isJoysticksInitialised()) {
         return;
     }
