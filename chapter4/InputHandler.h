@@ -40,6 +40,8 @@ class InputHandler
 
         Vector2D* getMousePosition();
 
+        bool isKeyDown(SDL_Scancode key);
+
         const int joystickDeadZone = 10000;
 
     private:
@@ -54,6 +56,8 @@ class InputHandler
         std::vector<bool> mouseButtonStates;
         Vector2D *mousePosition;
         bool joysticksInitialised;
+
+        Uint8 *keyStates;
 };
 
 typedef InputHandler TheInputHandler;
