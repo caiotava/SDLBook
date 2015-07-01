@@ -12,6 +12,8 @@ enum MouseButtons
     RIGHT = 2
 };
 
+const int joystickDeadZone = 10000;
+
 class InputHandler
 {
     public:
@@ -42,11 +44,20 @@ class InputHandler
 
         bool isKeyDown(SDL_Scancode key);
 
-        const int joystickDeadZone = 10000;
-
     private:
         InputHandler();
         ~InputHandler() {}
+
+        void onKeyDown();
+        void onKeyUp();
+
+        void onMouseMove(SDL_Event &event);
+        void onMouseButtonDown(SDL_Event &event);
+        void onMouseButtonUp(SDL_Event &event);
+
+        void onJoystickAxisMove(SDL_Event &event);
+        void onJoystickButtonDown(SDL_Event &event);
+        void onJoystickButtonUp(SDL_Event &event);
 
         static InputHandler *instance;
 

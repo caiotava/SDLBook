@@ -71,103 +71,34 @@ void InputHandler::update()
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        keyStates  = (Uint8*) SDL_GetKeyboardState(0);
-
-        if (event.type == SDL_QUIT) {
-            TheGame::getInstance()->clean();
-        }
-
-        if (event.type == SDL_MOUSEMOTION) {
-            mousePosition->setX(event.motion.x);
-            mousePosition->setY(event.motion.y);
-        }
-
-        if (event.type == SDL_MOUSEBUTTONDOWN) {
-            if (event.button.button == SDL_BUTTON_LEFT) {
-                mouseButtonStates[LEFT] = true;
-            }
-
-            if (event.button.button == SDL_BUTTON_MIDDLE) {
-                mouseButtonStates[MIDDLE] = true;
-            }
-
-            if (event.button.button == SDL_BUTTON_RIGHT) {
-                mouseButtonStates[RIGHT] = true;
-            }
-        }
-
-        if (event.type == SDL_MOUSEBUTTONUP) {
-            if (event.button.button == SDL_BUTTON_LEFT) {
-                mouseButtonStates[LEFT] = false;
-            }
-
-            if (event.button.button == SDL_BUTTON_MIDDLE) {
-                mouseButtonStates[MIDDLE] = false;
-            }
-
-            if (event.button.button == SDL_BUTTON_RIGHT) {
-                mouseButtonStates[RIGHT] = false;
-            }
-        }
-
-        if (event.type == SDL_JOYBUTTONDOWN) {
-            int whichOne = event.jaxis.which;
-
-            buttonStates[whichOne][event.jbutton.button] = true;
-        }
-
-        if (event.type == SDL_JOYBUTTONUP) {
-            int whichOne = event.jaxis.which;
-
-            buttonStates[whichOne][event.jbutton.button] = false;
-        }
-
-        if (event.type == SDL_JOYAXISMOTION) {
-            int whichOne = event.jaxis.which;
-
-            if (event.jaxis.axis == 0) {
-                joysticksValues[whichOne].first->setX(0);
-
-                if (event.jaxis.value > joystickDeadZone) {
-                    joysticksValues[whichOne].first->setX(1);
-                }
-                else if (event.jaxis.value < -joystickDeadZone) {
-                    joysticksValues[whichOne].first->setX(-1);
-                }
-            }
-
-            if (event.jaxis.axis == 1) {
-                joysticksValues[whichOne].first->setY(0);
-
-                if (event.jaxis.value > joystickDeadZone) {
-                    joysticksValues[whichOne].first->setY(1);
-                }
-                else if (event.jaxis.value < -joystickDeadZone) {
-                    joysticksValues[whichOne].first->setY(-1);
-                }
-            }
-
-            if (event.jaxis.axis == 3) {
-                joysticksValues[whichOne].second->setX(0);
-
-                if (event.jaxis.value > joystickDeadZone) {
-                    joysticksValues[whichOne].second->setX(1);
-                }
-                else if (event.jaxis.value < -joystickDeadZone) {
-                    joysticksValues[whichOne].second->setX(-1);
-                }
-            }
-
-            if (event.jaxis.axis == 4) {
-                joysticksValues[whichOne].second->setY(0);
-
-                if (event.jaxis.value > joystickDeadZone) {
-                    joysticksValues[whichOne].second->setY(1);
-                }
-                else if (event.jaxis.value < -joystickDeadZone) {
-                    joysticksValues[whichOne].second->setY(-1);
-                }
-            }
+        switch (event.type) {
+            case SDL_QUIT:
+                TheGame::getInstance()->clean();
+                break;
+            case SDL_MOUSEMOTION:
+                onMouseMove(event);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                onMouseButtonDown(event);
+                break;
+            case SDL_MOUSEBUTTONUP:
+                onMouseButtonUp(event);
+                break;
+            case SDL_JOYBUTTONDOWN:
+                onJoystickButtonDown(event);
+                break;
+            case SDL_JOYBUTTONUP:
+                onJoystickButtonUp(event);
+                break;
+            case SDL_JOYAXISMOTION:
+                onJoystickAxisMove(event);
+                break;
+            case SDL_KEYDOWN:
+                onKeyDown();
+                break;
+            case SDL_KEYUP:
+                onKeyUp();
+                break;
         }
     }
 }
@@ -226,4 +157,113 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
     }
 
     return keyStates[key] == 1;
+}
+
+void InputHandler::onKeyDown()
+{
+    keyStates  = (Uint8*) SDL_GetKeyboardState(0);
+}
+
+void InputHandler::onKeyUp()
+{
+    keyStates  = (Uint8*) SDL_GetKeyboardState(0);
+}
+
+void InputHandler::onMouseMove(SDL_Event &event)
+{
+    mousePosition->setX(event.motion.x);
+    mousePosition->setY(event.motion.y);
+}
+
+void InputHandler::onMouseButtonDown(SDL_Event &event)
+{
+    if (event.button.button == SDL_BUTTON_LEFT) {
+        mouseButtonStates[LEFT] = true;
+    }
+
+    if (event.button.button == SDL_BUTTON_MIDDLE) {
+        mouseButtonStates[MIDDLE] = true;
+    }
+
+    if (event.button.button == SDL_BUTTON_RIGHT) {
+        mouseButtonStates[RIGHT] = true;
+    }
+}
+
+void InputHandler::onMouseButtonUp(SDL_Event &event)
+{
+    if (event.button.button == SDL_BUTTON_LEFT) {
+        mouseButtonStates[LEFT] = false;
+    }
+
+    if (event.button.button == SDL_BUTTON_MIDDLE) {
+        mouseButtonStates[MIDDLE] = false;
+    }
+
+    if (event.button.button == SDL_BUTTON_RIGHT) {
+        mouseButtonStates[RIGHT] = false;
+    }
+}
+
+void InputHandler::onJoystickAxisMove(SDL_Event &event)
+{
+    int whichOne = event.jaxis.which;
+
+    if (event.jaxis.axis == 0) {
+        joysticksValues[whichOne].first->setX(0);
+
+        if (event.jaxis.value > joystickDeadZone) {
+            joysticksValues[whichOne].first->setX(1);
+        }
+        else if (event.jaxis.value < -joystickDeadZone) {
+            joysticksValues[whichOne].first->setX(-1);
+        }
+    }
+
+    if (event.jaxis.axis == 1) {
+        joysticksValues[whichOne].first->setY(0);
+
+        if (event.jaxis.value > joystickDeadZone) {
+            joysticksValues[whichOne].first->setY(1);
+        }
+        else if (event.jaxis.value < -joystickDeadZone) {
+            joysticksValues[whichOne].first->setY(-1);
+        }
+    }
+
+    if (event.jaxis.axis == 3) {
+        joysticksValues[whichOne].second->setX(0);
+
+        if (event.jaxis.value > joystickDeadZone) {
+            joysticksValues[whichOne].second->setX(1);
+        }
+        else if (event.jaxis.value < -joystickDeadZone) {
+            joysticksValues[whichOne].second->setX(-1);
+        }
+    }
+
+    if (event.jaxis.axis == 4) {
+        joysticksValues[whichOne].second->setY(0);
+
+        if (event.jaxis.value > joystickDeadZone) {
+            joysticksValues[whichOne].second->setY(1);
+        }
+        else if (event.jaxis.value < -joystickDeadZone) {
+            joysticksValues[whichOne].second->setY(-1);
+        }
+    }
+}
+
+void InputHandler::onJoystickButtonDown(SDL_Event &event)
+{
+    int whichOne = event.jaxis.which;
+
+    buttonStates[whichOne][event.jbutton.button] = true;
+}
+
+void InputHandler::onJoystickButtonUp(SDL_Event &event)
+{
+    int whichOne = event.jaxis.which;
+
+    buttonStates[whichOne][event.jbutton.button] = false;
 }
