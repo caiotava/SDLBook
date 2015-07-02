@@ -6,6 +6,7 @@ InputHandler *InputHandler::instance = 0;
 
 InputHandler::InputHandler()
 {
+    onKeyDown();
     mousePosition = new Vector2D(0, 0);
 
     for (int x = 0; x < 3; x++) {

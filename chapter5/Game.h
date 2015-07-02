@@ -4,6 +4,7 @@
 #include<vector>
 #include<SDL2/SDL.h>
 #include"GameObject.h"
+#include"GameStateMachine.h"
 
 class Game
 {
@@ -34,6 +35,7 @@ class Game
         bool running;
         SDL_Window *window;
         SDL_Renderer *renderer;
+        GameStateMachine *gameStateMachine;
 
         int currentFrame;
 

@@ -5,6 +5,8 @@
 #include"InputHandler.h"
 #include"Player.h"
 #include"Enemy.h"
+#include"MenuState.h"
+#include"PlayState.h"
 
 Game *Game::instance = 0;
 
@@ -33,6 +35,9 @@ bool Game::init(const char *title, int xPosition, int yPosition, int height, int
     if (!renderer) {
         return false;
     }
+
+    gameStateMachine = new GameStateMachine();
+    gameStateMachine->changeState(new MenuState());
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
@@ -65,7 +70,12 @@ void Game::render()
 
 void Game::handleEvents()
 {
-    TheInputHandler::getInstance()->update();
+    InputHandler *inputHandler = TheInputHandler::getInstance();
+    inputHandler->update();
+
+    if (inputHandler->isKeyDown(SDL_SCANCODE_RETURN)) {
+        gameStateMachine->changeState(new PlayState());
+    }
 }
 
 void Game::update()
