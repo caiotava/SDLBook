@@ -1,5 +1,23 @@
 #include"GameStateMachine.h"
 
+void GameStateMachine::update()
+{
+    if (gameStates.empty()) {
+        return;
+    }
+
+    gameStates.back()->update();
+}
+
+void GameStateMachine::render()
+{
+    if (gameStates.empty()) {
+        return;
+    }
+
+    gameStates.back()->render();
+}
+
 void GameStateMachine::pushState(GameState *pState)
 {
     gameStates.push_back(pState);

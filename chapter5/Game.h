@@ -37,8 +37,6 @@ class Game
         SDL_Renderer *renderer;
         GameStateMachine *gameStateMachine;
 
-        int currentFrame;
-
         std::vector<GameObject*> gameObjects;
 
         Game() {}
