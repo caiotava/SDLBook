@@ -4,6 +4,7 @@
 #include<iostream>
 #include<vector>
 #include"GameState.h"
+#include"GameObject.h"
 
 class MenuState : public GameState
 {
@@ -19,7 +20,10 @@ class MenuState : public GameState
     private:
         static const std::string menuId;
 
-        std::vector<GameObject*> gameObject;
+        static void menuToPlay();
+        static void exitFromMenu();
+
+        std::vector<GameObject*> gameObjects;
 };
 
 #endif

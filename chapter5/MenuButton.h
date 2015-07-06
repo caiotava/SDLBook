@@ -6,18 +6,22 @@
 class MenuButton : public SDLGameObject
 {
     public:
-        MenuButton(const LoaderParams *pParams);
+        MenuButton(const LoaderParams *pParams, void (*callback)());
 
         virtual void draw();
         virtual void update();
-        virtual void clean();
+        virtual void clean() {}
 
     private:
         enum buttonState {
-            MOUSE_OUT = 1,
-            MOUSE_OVER = 2,
+            MOUSE_OUT = 0,
+            MOUSE_OVER = 1,
             CLICKED = 2
         };
+
+        void (*onClickEvent) ();
+
+        bool released;
 };
 
 #endif
