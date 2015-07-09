@@ -1,11 +1,11 @@
-#ifndef __PLAYSTATE_H__
-#define __PLAYSTATE_H__
+#ifndef __PAUSESTATE_H__
+#define __PAUSESTATE_H__
 
 #include<vector>
 #include"GameState.h"
 #include"GameObject.h"
 
-class PlayState : public GameState
+class PauseState: public GameState
 {
     public:
         virtual void update();
@@ -14,12 +14,15 @@ class PlayState : public GameState
         virtual bool onEnter();
         virtual bool onExit();
 
-        virtual std::string getStateId() const { return playId; }
+        virtual std::string getStateId() const { return pauseId; }
 
     private:
-        static const std::string playId;
+        static const std::string pauseId;
 
         std::vector<GameObject*> gameObjects;
+
+        static void pauseToMain();
+        static void resumePlay();
 };
 
 #endif

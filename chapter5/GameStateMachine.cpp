@@ -6,6 +6,8 @@ void GameStateMachine::update()
         return;
     }
 
+    gameStates.back()->getStateId();
+
     gameStates.back()->update();
 }
 
@@ -31,7 +33,7 @@ void GameStateMachine::popState()
     }
 
     if (gameStates.back()->onExit()) {
-        delete gameStates.back();
+        //delete gameStates.back();
         gameStates.pop_back();
     }
 }
@@ -43,10 +45,7 @@ void GameStateMachine::changeState(GameState *pState)
             return;
         }
 
-        if (gameStates.back()->onExit()) {
-            delete gameStates.back();
-            gameStates.pop_back();
-        }
+        popState();
     }
 
     gameStates.push_back(pState);

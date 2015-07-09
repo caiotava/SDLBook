@@ -27,7 +27,8 @@ class Game
 
         bool isRunning() { return running; }
 
-        SDL_Renderer *getRenderer() const { return renderer; }
+        SDL_Renderer* getRenderer() const { return renderer; }
+        GameStateMachine* getGameStateMachine() { return gameStateMachine; }
 
     private:
         static Game *instance;

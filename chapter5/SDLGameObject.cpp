@@ -19,6 +19,12 @@ SDLGameObject::SDLGameObject(const LoaderParams *pParams):
 
 void SDLGameObject::draw()
 {
+    SDL_RendererFlip renderFlip = SDL_FLIP_NONE;
+
+    if (velocity.getX() > 0) {
+        renderFlip = SDL_FLIP_HORIZONTAL;
+    }
+
     TextureManager::getInstance()->drawFrame(
         textureId,
         position.getX(),
@@ -27,7 +33,8 @@ void SDLGameObject::draw()
         height,
         currentRow,
         currentFrame,
-        TheGame::getInstance()->getRenderer()
+        TheGame::getInstance()->getRenderer(),
+        renderFlip
     );
 }
 
