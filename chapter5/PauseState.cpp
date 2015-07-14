@@ -51,6 +51,7 @@ bool PauseState::onEnter()
     gameObjects.push_back(buttonResume);
 
     std::cout << "Entering PauseState" << std::endl;
+    return true;
 }
 
 bool PauseState::onExit()
@@ -63,7 +64,7 @@ bool PauseState::onExit()
     TheTextureManager::getInstance()->clearFromTextureMap("resumebutton");
     TheTextureManager::getInstance()->clearFromTextureMap("mainbutton");
 
-    TheInputHandler::getInstance()->reset();
+    /* TheInputHandler::getInstance()->reset(); */
 
     std::cout << "exiting PauseState" << std::endl;
 
