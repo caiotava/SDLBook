@@ -18,7 +18,7 @@ void Player::update()
 
     handleInput();
 
-    currentFrame = int((SDL_GetTicks() / 100) % 6);
+    currentFrame = int((SDL_GetTicks() / 100) % 5);
 
     SDLGameObject::update();
 }
