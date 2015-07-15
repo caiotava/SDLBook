@@ -2,6 +2,7 @@
 #include"PlayState.h"
 #include"Game.h"
 #include"PauseState.h"
+#include"GameOverState.h"
 #include"Player.h"
 #include"Enemy.h"
 #include"LoaderParams.h"
@@ -18,6 +19,10 @@ void PlayState::update()
 
     for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
         gameObjects[x]->update();
+    }
+
+    if (checkCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1]))) {
+        TheGame::getInstance()->getGameStateMachine()->pushState(new GameOverState());
     }
 }
 
@@ -60,6 +65,31 @@ bool PlayState::onExit()
 
     gameObjects.clear();
     TheTextureManager::getInstance()->clearFromTextureMap("helicopter");
+
+    return true;
+}
+
+bool PlayState::checkCollision(SDLGameObject* source, SDLGameObject* destination)
+{
+    int leftSource, leftDestination;
+    int rightSource, rightDestination;
+    int topSource, topDestination;
+    int bottomSource, bottomDestination;
+
+    leftSource = source->getPosition().getX();
+    rightSource = leftSource + source->getWidth();
+    topSource = source->getPosition().getY();
+    bottomSource = topSource + source->getHeight();
+
+    leftDestination = destination->getPosition().getX();
+    rightDestination = leftDestination + destination->getWidth();
+    topDestination = destination->getPosition().getY();
+    bottomDestination = topDestination + destination->getHeight();
+
+    if (bottomSource <= topDestination) { return false; }
+    if (topSource >= bottomDestination) { return false; }
+    if (rightSource <= leftDestination) { return false; }
+    if (leftSource >= rightDestination) { return false; }
 
     return true;
 }

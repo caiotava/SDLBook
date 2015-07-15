@@ -15,6 +15,11 @@ class SDLGameObject: public GameObject
         virtual void update();
         virtual void clean() {}
 
+        Vector2D& getPosition() { return position; }
+
+        int getWidth() { return width; }
+        int getHeight() { return height; }
+
     protected:
         int width;
         int height;

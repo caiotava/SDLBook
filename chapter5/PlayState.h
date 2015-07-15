@@ -4,6 +4,7 @@
 #include<vector>
 #include"GameState.h"
 #include"GameObject.h"
+#include"SDLGameObject.h"
 
 class PlayState : public GameState
 {
@@ -13,6 +14,8 @@ class PlayState : public GameState
 
         virtual bool onEnter();
         virtual bool onExit();
+
+        bool checkCollision(SDLGameObject* source, SDLGameObject* destination);
 
         virtual std::string getStateId() const { return playId; }
 
