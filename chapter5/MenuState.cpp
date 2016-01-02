@@ -45,15 +45,15 @@ bool MenuState::onExit()
 {
     std::cout << "exiting MenuState" << std::endl;
 
-	for (int x = 0; x < gameObjects.size(); x++) {
-		gameObjects[x]->clean();
-	}
+    for (int x = 0; x < gameObjects.size(); x++) {
+        gameObjects[x]->clean();
+    }
 
-	gameObjects.clear();
-	TheTextureManager::getInstance()->clearFromTextureMap("playbutton");
-	TheTextureManager::getInstance()->clearFromTextureMap("exitbutton");
+    gameObjects.clear();
+    TheTextureManager::getInstance()->clearFromTextureMap("playbutton");
+    TheTextureManager::getInstance()->clearFromTextureMap("exitbutton");
 
-	return true;
+    return true;
 }
 
 void MenuState::menuToPlay()
