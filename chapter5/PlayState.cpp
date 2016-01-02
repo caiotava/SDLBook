@@ -38,5 +38,13 @@ bool PlayState::onEnter()
 bool PlayState::onExit()
 {
     std::cout << "exiting PLayState" << std::endl;
-    return true;
+
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->clean();
+	}
+
+	gameObjects.clear();
+	TheTextureManager::getInstance()->clearFromTextureMap("helicopter");
+
+	return true;
 }
