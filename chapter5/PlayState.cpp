@@ -8,10 +8,16 @@ const std::string PlayState::playId = "PLAY";
 
 void PlayState::update()
 {
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->update();
+	}
 }
 
 void PlayState::render()
 {
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->draw();
+	}
 }
 
 bool PlayState::onEnter()
