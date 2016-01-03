@@ -15,14 +15,14 @@ class PlayState : public GameState
         virtual bool onEnter();
         virtual bool onExit();
 
-        bool checkCollision(SDLGameObject* source, SDLGameObject* destination);
-
         virtual std::string getStateId() const { return playId; }
 
     private:
         static const std::string playId;
 
         std::vector<GameObject*> gameObjects;
+
+        bool checkCollision(SDLGameObject* pPlayer, SDLGameObject* pEnemy);
 };
 
 #endif

@@ -1,3 +1,4 @@
+#include"PlayState.h"
 #include"MenuState.h"
 #include"Game.h"
 #include"PlayState.h"
@@ -43,24 +44,27 @@ bool MenuState::onEnter()
 
 bool MenuState::onExit()
 {
-	for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
-		gameObjects[x]->clean();
-	}
-
-	gameObjects.clear();
-	TheTextureManager::getInstance()->clearFromTextureMap("playbutton");
-	TheTextureManager::getInstance()->clearFromTextureMap("exitbutton");
-
     std::cout << "exiting MenuState" << std::endl;
-	return true;
+
+    for (int x = 0; x < gameObjects.size(); x++) {
+        gameObjects[x]->clean();
+    }
+
+    gameObjects.clear();
+    TheTextureManager::getInstance()->clearFromTextureMap("playbutton");
+    TheTextureManager::getInstance()->clearFromTextureMap("exitbutton");
+
+    return true;
 }
 
 void MenuState::menuToPlay()
 {
-	TheGame::getInstance()->getGameStateMachine()->changeState(new PlayState());
+    std::cout << "Play button clicked" << std::endl;
+    TheGame::getInstance()->getStateMachine()->changeState(new PlayState());
 }
 
 void MenuState::exitFromMenu()
 {
-	TheGame::getInstance()->clean();
+    std::cout << "Exit button clicked" << std::endl;
+    TheGame::getInstance()->clean();
 }

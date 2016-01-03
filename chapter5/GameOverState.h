@@ -1,12 +1,11 @@
-#ifndef __GAMEOVER_STATE_H__
-#define __GAMEOVER_STATE_H__
+#ifndef __GAMEOVERSTATE_H__
+#define __GAMEOVERSTATE_H__
 
-#include<iostream>
 #include<vector>
 #include"GameState.h"
 #include"GameObject.h"
 
-class GameOverState: public GameState
+class GameOverState : public GameState
 {
     public:
         virtual void update();
@@ -15,7 +14,7 @@ class GameOverState: public GameState
         virtual bool onEnter();
         virtual bool onExit();
 
-        virtual std::string getStateId() const {return gameOverId;}
+        virtual std::string getStateId() const { return gameOverId; }
 
     private:
         static void gameOverToMain();

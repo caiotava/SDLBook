@@ -4,14 +4,14 @@
 #include"SDLGameObject.h"
 #include"LoaderParams.h"
 
-class AnimatedGraphic: public SDLGameObject
+class AnimatedGraphic : public SDLGameObject
 {
     public:
-        AnimatedGraphic(const LoaderParams* pParams, int animateSpeed);
+        AnimatedGraphic(const LoaderParams* pParams, int pAnimateSpeed);
 
         virtual void draw();
         virtual void update();
-        virtual void clean() {}
+        virtual void clean() {};
 
     private:
         int animateSpeed;

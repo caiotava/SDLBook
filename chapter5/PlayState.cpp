@@ -1,95 +1,91 @@
 #include<iostream>
 #include"PlayState.h"
 #include"Game.h"
-#include"PauseState.h"
-#include"GameOverState.h"
-#include"Player.h"
-#include"Enemy.h"
-#include"LoaderParams.h"
 #include"TextureManager.h"
 #include"InputHandler.h"
+#include"PauseState.h"
+#include"Player.h"
+#include"Enemy.h"
+#include"GameOverState.h"
 
 const std::string PlayState::playId = "PLAY";
 
 void PlayState::update()
 {
-    if (TheInputHandler::getInstance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
-        TheGame::getInstance()->getGameStateMachine()->pushState(new PauseState());
-    }
+	if (TheInputHandler::getInstance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		TheGame::getInstance()->getStateMachine()->pushState(new PauseState());
+	}
 
-    for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
-        gameObjects[x]->update();
-    }
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->update();
+	}
 
     if (checkCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1]))) {
-        TheGame::getInstance()->getGameStateMachine()->pushState(new GameOverState());
+        TheGame::getInstance()->getStateMachine()->pushState(new GameOverState());
     }
 }
 
 void PlayState::render()
 {
-    for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
-        gameObjects[x]->draw();
-    }
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->draw();
+	}
 }
 
 bool PlayState::onEnter()
 {
-    Game* game = TheGame::getInstance();
-    TextureManager* textureManager = TheTextureManager::getInstance();
+    std::cout << "entering PlayState" << std::endl;
 
-    if (!textureManager->load("assets/helicopter.png", "helicopter", game->getRenderer())) {
-        return false;
-    }
+	if (!TheTextureManager::getInstance()->load("assets/helicopter.png", "helicopter", TheGame::getInstance()->getRenderer())) {
+		return false;
+	}
 
-    if (!textureManager->load("assets/helicopter2.png", "helicopter2", game->getRenderer())) {
-        return false;
-    }
+	if (!TheTextureManager::getInstance()->load("assets/helicopter2.png", "helicopter2", TheGame::getInstance()->getRenderer())) {
+		return false;
+	}
 
-    GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter"));
-    GameObject* enemy = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2"));
+	GameObject* player = new Player(new LoaderParams(500, 100, 128, 55, "helicopter"));
+	GameObject* enemy = new Enemy(new LoaderParams(100, 100, 128, 55, "helicopter2"));
 
-    gameObjects.push_back(player);
-    gameObjects.push_back(enemy);
+	gameObjects.push_back(player);
+	gameObjects.push_back(enemy);
 
-    std::cout << "Entering PlayState." <<  std::endl;
-
-    return true;
+	return true;
 }
 
 bool PlayState::onExit()
 {
-    for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
-        gameObjects[x]->clean();
-    }
+    std::cout << "exiting PLayState" << std::endl;
 
-    gameObjects.clear();
-    TheTextureManager::getInstance()->clearFromTextureMap("helicopter");
+	for (int x = 0; x < gameObjects.size(); x++) {
+		gameObjects[x]->clean();
+	}
 
-    return true;
+	gameObjects.clear();
+	TheTextureManager::getInstance()->clearFromTextureMap("helicopter");
+
+	return true;
 }
 
-bool PlayState::checkCollision(SDLGameObject* source, SDLGameObject* destination)
+bool PlayState::checkCollision(SDLGameObject* pPlayer, SDLGameObject* pEnemy)
 {
-    int leftSource, leftDestination;
-    int rightSource, rightDestination;
-    int topSource, topDestination;
-    int bottomSource, bottomDestination;
+	int leftPlayer, leftEnemy;
+	int rightPlayer, rightEnemy;
+	int topPlayer, topEnemy;
+	int bottomPlayer, bottomEnemy;
 
-    leftSource = source->getPosition().getX();
-    rightSource = leftSource + source->getWidth();
-    topSource = source->getPosition().getY();
-    bottomSource = topSource + source->getHeight();
+	leftPlayer = pPlayer->getPosition().getX();
+	rightPlayer = leftPlayer + pPlayer->getWidth();
+	topPlayer = pPlayer->getPosition().getY();
+	bottomPlayer = topPlayer + pPlayer->getHeight();
 
-    leftDestination = destination->getPosition().getX();
-    rightDestination = leftDestination + destination->getWidth();
-    topDestination = destination->getPosition().getY();
-    bottomDestination = topDestination + destination->getHeight();
+	leftEnemy = pEnemy->getPosition().getX();
+	rightEnemy = leftEnemy + pEnemy->getWidth();
+	topEnemy = pEnemy->getPosition().getY();
+	bottomEnemy = topEnemy + pEnemy->getHeight();
 
-    if (bottomSource <= topDestination) { return false; }
-    if (topSource >= bottomDestination) { return false; }
-    if (rightSource <= leftDestination) { return false; }
-    if (leftSource >= rightDestination) { return false; }
-
-    return true;
+	return !((bottomPlayer <= topEnemy)
+		|| (topPlayer >= bottomEnemy)
+		|| (rightPlayer <= leftEnemy)
+		|| (leftPlayer >= rightEnemy));
 }

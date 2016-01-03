@@ -5,7 +5,7 @@
 #include"GameState.h"
 #include"GameObject.h"
 
-class PauseState: public GameState
+class PauseState : public GameState
 {
     public:
         virtual void update();
@@ -17,12 +17,12 @@ class PauseState: public GameState
         virtual std::string getStateId() const { return pauseId; }
 
     private:
+        static void pauseToMain();
+        static void resumePlay();
+
         static const std::string pauseId;
 
         std::vector<GameObject*> gameObjects;
-
-        static void pauseToMain();
-        static void resumePlay();
 };
 
 #endif
