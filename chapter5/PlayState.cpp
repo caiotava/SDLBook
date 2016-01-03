@@ -61,3 +61,26 @@ bool PlayState::onExit()
 
 	return true;
 }
+
+bool PlayState::checkCollision(SDLGameObject* pPlayer, SDLGameObject* pEnemy)
+{
+	int leftPlayer, leftEnemy;
+	int rightPlayer, rightEnemy;
+	int topPlayer, topEnemy;
+	int bottomPlayer, bottomEnemy;
+
+	leftPlayer = pPlayer->getPosition().getX();
+	rightPlayer = leftPlayer + pPlayer->getWidth();
+	topPlayer = pPlayer->getPosition().getY();
+	bottomPlayer = topPlayer + pPlayer->getHeight();
+
+	leftEnemy = pEnemy->getPosition().getX();
+	rightEnemy = leftEnemy + pEnemy->getWidth();
+	topEnemy = pEnemy->getPosition().getY();
+	bottomEnemy = topEnemy + pEnemy->getHeight();
+
+	return !((bottomPlayer <= topEnemy)
+		|| (topPlayer >= bottomEnemy)
+		|| (rightPlayer <= leftEnemy)
+		|| (leftPlayer >= rightEnemy));
+}
