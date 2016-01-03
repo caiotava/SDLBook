@@ -6,6 +6,7 @@
 #include"PauseState.h"
 #include"Player.h"
 #include"Enemy.h"
+#include"GameOverState.h"
 
 const std::string PlayState::playId = "PLAY";
 
@@ -18,6 +19,10 @@ void PlayState::update()
 	for (int x = 0; x < gameObjects.size(); x++) {
 		gameObjects[x]->update();
 	}
+
+    if (checkCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1]))) {
+        TheGame::getInstance()->getStateMachine()->pushState(new GameOverState());
+    }
 }
 
 void PlayState::render()
