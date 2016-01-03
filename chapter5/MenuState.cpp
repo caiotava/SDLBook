@@ -1,6 +1,7 @@
 #include"PlayState.h"
 #include"MenuState.h"
 #include"Game.h"
+#include"PlayState.h"
 #include"MenuButton.h"
 #include"TextureManager.h"
 
@@ -8,14 +9,14 @@ const std::string MenuState::menuId = "MENU";
 
 void MenuState::update()
 {
-    for (int x = 0; x < gameObjects.size(); x++) {
+    for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
         gameObjects[x]->update();
     }
 }
 
 void MenuState::render()
 {
-    for (int x = 0; x < gameObjects.size(); x++) {
+    for (std::vector<GameObject*>::size_type x = 0; x < gameObjects.size(); x++) {
         gameObjects[x]->draw();
     }
 }
