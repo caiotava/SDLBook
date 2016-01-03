@@ -3,6 +3,8 @@
 
 Enemy::Enemy(const LoaderParams *pParams): SDLGameObject(pParams)
 {
+    velocity.setY(2);
+    velocity.setX(0.001);
 }
 
 void Enemy::draw()
